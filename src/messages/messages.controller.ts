@@ -24,8 +24,9 @@ export class MessagesController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.messagesService.findOne(+id);
+  findOne(@Param('id') id: string,@Req() req) {
+    const userId = req.user.id
+    return this.messagesService.findOne(+id,userId);
   }
 
   @Patch(':id')

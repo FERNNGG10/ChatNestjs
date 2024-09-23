@@ -30,8 +30,12 @@ export class MessagesService {
     return await this.messageRepository.find();
   }
 
-  async findOne(id: number) {
-    return await this.messageRepository.find({where:{roomId:id}});
+  async findOne(id: number, userid: number) {
+    return await this.messageRepository.find(
+      {
+        where:{roomId:id,userId:userid}
+      }
+    );
   }
 
   update(id: number, updateMessageDto: UpdateMessageDto) {
