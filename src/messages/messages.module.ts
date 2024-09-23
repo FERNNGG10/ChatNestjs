@@ -9,8 +9,7 @@ import { User } from 'src/users/entities/user.entity';
   controllers: [MessagesController],
   providers: [MessagesService],
   imports: [
-    TypeOrmModule.forFeature([Message], 'mongodbconnection'),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([Message,User])
   ],
   exports: [MessagesService], 
 })

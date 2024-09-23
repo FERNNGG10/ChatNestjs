@@ -11,7 +11,7 @@ import { User } from 'src/users/entities/user.entity';
 export class MessagesService {
 
   constructor(
-    @InjectRepository(Message, 'mongodbconnection')
+    @InjectRepository(Message)
     private messageRepository: Repository<Message>,
 
     @InjectRepository(User)

@@ -1,11 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Entity, ObjectIdColumn,ObjectId, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
+import { Entity, ObjectIdColumn,ObjectId, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('messages')
 export class Message {
-    @ObjectIdColumn()
-    @ApiProperty({type:()=>String})
-    _id: ObjectId;
+    @PrimaryGeneratedColumn()
+    id: number;
 
     @Column('text')
     message: string;
