@@ -6,7 +6,10 @@ import { LocalAuthGuard } from './guards/local.guard';
 import { Request } from 'express';
 import { JwtAuthGuard } from './guards/jwt.guard';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
 
@@ -16,6 +19,7 @@ export class AuthController {
 
     @Post('login')
     @UseGuards(LocalAuthGuard)
+    @ApiBody({type:AuthUserDto})
     login(@Req() req: Request){
         return req.user;
     }
@@ -25,7 +29,7 @@ export class AuthController {
         return this.authService.register(CreateUserDto);
     }
 
-
+    @ApiBearerAuth()
     @Get('profile')
     @UseGuards(JwtAuthGuard)
     profile(@Req() req:Request){
