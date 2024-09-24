@@ -13,6 +13,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
+  app.enableCors()
   const config = new DocumentBuilder()
   .setTitle('Seguridad informatica')
   .setDescription('Aplicación chat')
