@@ -37,6 +37,8 @@ export class AuthController {
         //console.log(req.user);
         return req.user;
     }
+
+    
     
 
 }

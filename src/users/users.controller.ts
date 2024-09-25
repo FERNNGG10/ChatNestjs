@@ -11,6 +11,11 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+ 
+  @Get('seeder')
+  seeder(){
+    return this.usersService.seeder()
+  }
   
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
@@ -34,6 +39,7 @@ export class UsersController {
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
   }
+
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
