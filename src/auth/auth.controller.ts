@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthUserDto } from './dto/auth-user.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -20,6 +20,7 @@ export class AuthController {
     @Post('login')
     @UseGuards(LocalAuthGuard)
     @ApiBody({type:AuthUserDto})
+    @HttpCode(HttpStatus.OK)
     login(@Req() req: Request){
         return req.user;
     }

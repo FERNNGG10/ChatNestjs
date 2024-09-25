@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeormModule } from './datasource/typeorm/typeorm.module';
 import { WebSocketModule } from './websockets/websocket.module';
 import { MessagesModule } from './messages/messages.module';
+import { RoomsModule } from './rooms/rooms.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { MessagesModule } from './messages/messages.module';
     AuthModule,
     UsersModule,
     WebSocketModule,
-    MessagesModule
+    MessagesModule,
+    RoomsModule
   ],
   controllers: [AppController],
   providers: [AppService],

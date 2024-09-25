@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Entity, ObjectIdColumn,ObjectId, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Room } from "src/rooms/entities/room.entity";
+import { Entity, ObjectIdColumn,ObjectId, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 
 @Entity('messages')
 export class Message {
@@ -10,10 +11,10 @@ export class Message {
     message: string;
 
     @Column()
-    userId: number;
+    roomId:number
 
-    @Column()
-    roomId: number;
+    @ManyToOne(()=>Room,(room)=>room.messages )
+    room:Room
 
     @CreateDateColumn({type:'date'})
     createdAt: Date;

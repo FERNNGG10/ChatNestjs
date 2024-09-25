@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Message } from './entities/message.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
+import { Room } from 'src/rooms/entities/room.entity';
 
 
 @Injectable()
@@ -15,13 +16,23 @@ export class MessagesService {
     private messageRepository: Repository<Message>,
 
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: Repository<User>,
+
+    @InjectRepository(Room)
+    private roomRepository: Repository<Room>
   ){}
 
   async create(createMessageDto: CreateMessageDto, userId: number) {
+
+    const room = await this.roomRepository.create({
+      userId1:userId,
+      userId2:createMessageDto.roomId
+    })
+    await this.roomRepository.save(room)
+
     const message = await this.messageRepository.create({
-      ...createMessageDto,
-      userId
+      message:createMessageDto.message,
+      roomId:room.id
     });
     return await this.messageRepository.save(message);
   }
@@ -30,12 +41,22 @@ export class MessagesService {
     return await this.messageRepository.find();
   }
 
-  async findOne(id: number, userid: number) {
-    return await this.messageRepository.find(
-      {
-        where:{roomId:id,userId:userid}
-      }
-    );
+  async findOne(id: number, userId: number) {
+    const messages = await this.messageRepository.find({
+      relations: ['room'],
+      where: {
+        room: {
+          userId1: userId,
+          userId2: id,
+        },
+      },
+    });
+  
+    // Filtrar manualmente los resultados para excluir el objeto `room`
+    return messages.map(message => {
+      const { room, ...messageWithoutRoom } = message;
+      return messageWithoutRoom;
+    });
   }
 
   update(id: number, updateMessageDto: UpdateMessageDto) {

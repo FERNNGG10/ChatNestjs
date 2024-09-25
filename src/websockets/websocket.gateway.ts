@@ -56,19 +56,20 @@ export class webSocketGateway
 
   @SubscribeMessage('message')
   async handleMessage(@MessageBody() message: any, @ConnectedSocket() client: Socket) {
-    console.log(client.data.user.id)
-    //console.log(message)
-    //console.log(message.message)
+    // console.log(client.data.user.id)
+    
+    // console.log(message)
+    // console.log(message.message)
     if (typeof message === 'string') {
       message = JSON.parse(message);
     }
-    //console.log(message.message)
-    //console.log(message.roomId) 
+    // console.log(message.message)
+    // console.log(message.roomId) 
     await this.messageService.create(message,client.data.user.id);
     //console.log(this.clients.get(message.roomId))
     const recipientClient = this.clients.get(message.roomId);
-    //console.log(recipientClient)
-    //console.log('sending message to recipient', this.clients.get(message.roomId));
+    // console.log(recipientClient)
+    // console.log('sending message to recipient', this.clients.get(message.roomId));
     if (recipientClient) {
       recipientClient.emit('newMessage',message);
     }

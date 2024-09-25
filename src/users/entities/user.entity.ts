@@ -1,6 +1,6 @@
 import { Exclude } from 'class-transformer';
 import { createHash } from 'crypto';
-
+import { Room } from 'src/rooms/entities/room.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -8,6 +8,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -23,8 +24,7 @@ export class User {
   @Exclude()
   @Column()
   password: string;
-  
- 
+
   @Column()
   email: string;
 
@@ -36,6 +36,12 @@ export class User {
 
   @UpdateDateColumn({ type: 'date' })
   updatedAt: Date;
+
+  @OneToMany(() => Room, room => room.user1)
+  roomsAsUser1: Room[];
+
+  @OneToMany(() => Room, room => room.user2)
+  roomsAsUser2: Room[];
 
   @BeforeInsert()
   @BeforeUpdate()

@@ -12,13 +12,14 @@ export class AuthService {
         private usersService: UsersService,
     ) {}
 
-    async validateUser({email,password}:AuthUserDto) {
+     async validateUser({email, password}: AuthUserDto) {
         const user = await this.usersService.findOneByEmail(email);
         const hash = createHash('sha256');
         hash.update(password);
         const hashedPassword = hash.digest('hex');
         if (user && user.password === hashedPassword) {
-           return this.jwtService.signAsync({id: user.id,email: user.email});
+            const token = await this.jwtService.signAsync({ id: user.id, email: user.email });
+            return { token };
         }
         return null;
     }

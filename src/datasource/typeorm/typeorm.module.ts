@@ -5,6 +5,7 @@ import { User } from 'src/users/entities/user.entity';
 import { isUniqueConstraint } from 'src/shared/constraints/isUnique.constraint';
 import { Message } from 'src/messages/entities/message.entity';
 import { existConstraint } from 'src/shared/constraints/exist.constraint';
+import { Room } from 'src/rooms/entities/room.entity';
 
 @Global()
 @Module({
@@ -21,7 +22,7 @@ import { existConstraint } from 'src/shared/constraints/exist.constraint';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
         synchronize: true,
-        entities: [User,Message],
+        entities: [User,Message,Room],
       }),
     }),
     // TypeOrmModule.forRootAsync({
@@ -36,7 +37,7 @@ import { existConstraint } from 'src/shared/constraints/exist.constraint';
     //     synchronize: true,
     //   }),
     // }),
-    TypeOrmModule.forFeature([User,Message]),
+    TypeOrmModule.forFeature([User,Message,Room]),
   
   ],
   providers: [isUniqueConstraint,existConstraint],
