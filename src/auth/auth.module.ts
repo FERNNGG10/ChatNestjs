@@ -10,6 +10,8 @@ import { JwtEstrategy } from './strategies/jwt.strategy';
 import { EmailModule } from 'src/email/email.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
+import { GoogleStrategy } from './strategies/google.strategy';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 
 
@@ -22,10 +24,10 @@ import { User } from 'src/users/entities/user.entity';
     }),
     UsersModule,
     EmailModule,
-    TypeOrmModule.forFeature([User])
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [AuthController],
-  providers: [AuthService,LocalStrategy,JwtEstrategy],
+  providers: [AuthService,LocalStrategy,JwtEstrategy,GoogleStrategy],
   exports:[JwtModule]
 })
 export class AuthModule {}

@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { Room } from 'src/rooms/entities/room.entity';
 import { Message } from 'src/messages/entities/message.entity';
+import { GoogleUserDto } from './dto/google-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -23,6 +24,11 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     const user = await this.userRepository.create(createUserDto);
+    return await this.userRepository.save(user);
+  }
+
+  async createGoogleUser(gooleUserDto:GoogleUserDto) {
+    const user = await this.userRepository.create(gooleUserDto);
     return await this.userRepository.save(user);
   }
 

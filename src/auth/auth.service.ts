@@ -1,9 +1,10 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Req, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { AuthUserDto } from './dto/auth-user.dto';
 import { createHash } from 'crypto';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { GoogleUserDto } from 'src/users/dto/google-user.dto';
 import { EmailService } from 'src/email/email.service';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/users/entities/user.entity';
@@ -31,6 +32,12 @@ export class AuthService {
       return { id: user.id, email: user.email };
     }
     return null;
+  }
+
+  async googleLogin(userId:number) {
+    await this.generateVerificationCode(userId);
+    const user = await this.usersService.findOne(userId);
+    return { id: user.id, email:user.email };
   }
 
   async generateVerificationCode(userId: number) {
@@ -64,10 +71,14 @@ export class AuthService {
     return await this.usersService.create(createUserDto);
   }
 
-  async send() {
-    // await this.emailService.sendMail('fgolmos10@gmail.com', 'hola', {
-    //   name: 'Fernando',
-    // });
-    return true;
+  async validateGoogleUser(googleUser: GoogleUserDto) {
+    
+    //console.log(googleUser);
+    const user = await this.userRepository.findOneBy({email:googleUser.email});
+    if(user) return user;
+    const newUser = await this.userRepository.create(googleUser);
+    return await this.userRepository.save(newUser);
   }
+
+
 }
