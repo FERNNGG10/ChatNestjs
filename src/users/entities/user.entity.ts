@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import * as bycrypt from 'bcrypt';
 import { createHash } from 'crypto';
 import { Room } from 'src/rooms/entities/room.entity';
 import {
@@ -28,6 +29,10 @@ export class User {
   @Column()
   email: string;
 
+  @Exclude()
+  @Column({ nullable: true })
+  code: string;
+
   @CreateDateColumn({ type: 'date' })
   createdAt: Date;
 
@@ -50,10 +55,11 @@ export class User {
   }
 
   @BeforeInsert()
-  @BeforeUpdate()
+  //@BeforeUpdate()
   async encryptPassword() {
     const hash = createHash('sha256');
     hash.update(this.password);
     this.password = hash.digest('hex');
   }
+
 }

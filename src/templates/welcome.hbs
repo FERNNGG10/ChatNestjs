@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Dos Pasos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .header h1 {
+            margin: 0;
+            color: #333333;
+        }
+        .content {
+            margin: 20px 0;
+        }
+        .content p {
+            color: #555555;
+        }
+        .code {
+            display: block;
+            width: fit-content;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: #333333;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #777777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Verificación de Dos Pasos</h1>
+        </div>
+        <div class="content">
+            <p>Hola {{name}},</p>
+            <p>Para completar el proceso de inicio de sesión, por favor ingresa el siguiente código de verificación:</p>
+            <span class="code">{{code}}</span>
+            <p>Si no solicitaste este código, por favor ignora este correo.</p>
+        </div>
+        <div class="footer">
+            <p>Gracias,</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -8,6 +8,7 @@ import { TypeormModule } from './datasource/typeorm/typeorm.module';
 import { WebSocketModule } from './websockets/websocket.module';
 import { MessagesModule } from './messages/messages.module';
 import { RoomsModule } from './rooms/rooms.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { RoomsModule } from './rooms/rooms.module';
     UsersModule,
     WebSocketModule,
     MessagesModule,
-    RoomsModule
+    RoomsModule,
+    EmailModule
   ],
   controllers: [AppController],
   providers: [AppService],

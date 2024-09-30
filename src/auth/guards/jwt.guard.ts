@@ -4,7 +4,7 @@ import { AuthGuard } from "@nestjs/passport";
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
   canActivate(context: ExecutionContext) {
-    //console.log('inside jwt guard');
+    console.log('inside jwt guard');
     return super.canActivate(context);
   }
 }

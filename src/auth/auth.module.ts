@@ -7,6 +7,10 @@ import { UsersModule } from 'src/users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtEstrategy } from './strategies/jwt.strategy';
+import { EmailModule } from 'src/email/email.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from 'src/users/entities/user.entity';
+
 
 
 @Module({
@@ -16,7 +20,9 @@ import { JwtEstrategy } from './strategies/jwt.strategy';
       secret:'jwtsecret8@g',
       signOptions: { expiresIn: '1h' }, 
     }),
-    UsersModule
+    UsersModule,
+    EmailModule,
+    TypeOrmModule.forFeature([User])
   ],
   controllers: [AuthController],
   providers: [AuthService,LocalStrategy,JwtEstrategy],
