@@ -57,8 +57,8 @@ export class UsersService {
 
   async seeder() {
     const users = [
-      { email: 'user1@example.com', password: 'password1', username: 'user1' },
-      { email: 'user2@example.com', password: 'password2', username: 'user2' },
+      { email: 'miguelvillalpando19@gmail.com', password: 'password1', username: 'user1' },
+      { email: 'edsonalgarate@gmail.com', password: 'password2', username: 'user2' },
     ];
 
     const rooms = [
