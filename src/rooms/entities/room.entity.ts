@@ -14,6 +14,9 @@ export class Room {
     @Column()
     userId2:number
 
+    @Column({nullable:true})
+    status:number //0 espera, 1 activo, 2 rechazado
+
     @ManyToOne(() => User)
     @JoinColumn({name:'userId1'})
     user1: User;

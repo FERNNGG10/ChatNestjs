@@ -59,25 +59,17 @@ export class UsersService {
     const users = [
       { email: 'user1@example.com', password: 'password1', username: 'user1' },
       { email: 'user2@example.com', password: 'password2', username: 'user2' },
-      { email: 'user3@example.com', password: 'password3', username: 'user3' }
     ];
 
     const rooms = [
-      { userId1: 1, userId2: 2 },
-      { userId1: 1, userId2: 3 },
-      { userId1: 2, userId2: 3 },
-      { userId1: 2, userId2: 1 },
-      { userId1: 3, userId2: 1 },
-      { userId1: 3, userId2: 2 }
+      { userId1: 1, userId2: 2 ,status:1},
+      { userId1: 2, userId2: 1 ,status:1},
+
     ];
 
     const messages = [
       { message: 'Hello from user1 to user2', roomId: 1 },
       { message: 'Hello from user1 to user3', roomId: 2 },
-      { message: 'Hello from user2 to user3', roomId: 3 },
-      { message: 'Hello from user2 to user1', roomId: 4 },
-      { message: 'Hello from user3 to user1', roomId: 5 },
-      { message: 'Hello from user3 to user2', roomId: 6 }
     ];
 
     // Insert users
