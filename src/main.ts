@@ -4,6 +4,7 @@ import { EntityNotFoundFilter } from './filters/entity-not-found-exception.filte
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as dotenv from 'dotenv';
 
 
 async function bootstrap() {
@@ -23,5 +24,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
   await app.listen(3000);
+  dotenv.config();
 }
 bootstrap();

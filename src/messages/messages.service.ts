@@ -6,6 +6,7 @@ import { Message } from './entities/message.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Room } from 'src/rooms/entities/room.entity';
+import { encryptMessage, decryptMessage } from 'src/utils/crypto-utils';
 
 
 @Injectable()
@@ -23,22 +24,26 @@ export class MessagesService {
   ){}
 
   async create(createMessageDto: CreateMessageDto, userId: number) {
-
     const room = await this.roomRepository.create({
-      userId1:userId,
-      userId2:createMessageDto.roomId
-    })
-    await this.roomRepository.save(room)
+      userId1: userId,
+      userId2: createMessageDto.roomId
+    });
+    await this.roomRepository.save(room);
 
+    const encryptedMessage = encryptMessage(createMessageDto.message);
     const message = await this.messageRepository.create({
-      message:createMessageDto.message,
-      roomId:room.id
+      message: encryptedMessage,
+      roomId: room.id
     });
     return await this.messageRepository.save(message);
   }
 
   async findAll() {
-    return await this.messageRepository.find();
+    const messages = await this.messageRepository.find();
+    return messages.map(message => ({
+      ...message,
+      message: decryptMessage(message.message)
+    }));
   }
 
   async findOne(id: number, userId: number) {
@@ -51,11 +56,14 @@ export class MessagesService {
         },
       },
     });
-  
+
     // Filtrar manualmente los resultados para excluir el objeto `room`
     return messages.map(message => {
       const { room, ...messageWithoutRoom } = message;
-      return messageWithoutRoom;
+      return {
+        ...messageWithoutRoom,
+        message: decryptMessage(messageWithoutRoom.message)
+      };
     });
   }
 
