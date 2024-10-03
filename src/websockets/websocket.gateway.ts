@@ -13,7 +13,12 @@ import { Server, Socket } from 'socket.io';
 import { MessagesService } from 'src/messages/messages.service';
 
 
-@WebSocketGateway(3002, {})
+@WebSocketGateway(3002, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+  },
+})
 @Injectable()
 export class webSocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect
