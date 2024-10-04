@@ -47,25 +47,47 @@ export class MessagesService {
   }
 
   async findOne(id: number, userId: number) {
-    const messages = await this.messageRepository.find({
-      relations: ['room'],
-      where: {
-        room: {
-          userId1: userId,
-          userId2: id,
-        },
-      },
-      
-    });
+      const messages = await this.messageRepository.find({
+          relations: ['room', 'room.user1', 'room.user2'],
+          where: [
+              { room: { userId1: userId, userId2: id } },
+              { room: { userId1: id, userId2: userId } }
+          ],
+      });
+      return messages.map(message => {
+          return {
+              id: message.id,
+              message: decryptMessage(message.message),
+              roomId: message.roomId,
+              createdAt: message.createdAt,
+              updatedAt: message.updatedAt,
+              deletedAt: message.deletedAt,
+              user1: message.room.user1,
+              user2: message.room.user2
+          };
+      });
+  }
 
-    // Filtrar manualmente los resultados para excluir el objeto `room`
-    return messages.map(message => {
-      const { room, ...messageWithoutRoom } = message;
-      return {
-        ...messageWithoutRoom,
-        message: decryptMessage(messageWithoutRoom.message)
-      };
+  async findbymessage(id: number) {
+    const message = await this.messageRepository.findOne({
+      relations: ['room', 'room.user1', 'room.user2'],
+      where: { id: id },
     });
+  
+    if (!message) {
+      throw new Error('Message not found');
+    }
+  
+    return {
+      id: message.id,
+      message: decryptMessage(message.message),
+      roomId: message.roomId,
+      createdAt: message.createdAt,
+      updatedAt: message.updatedAt,
+      deletedAt: message.deletedAt,
+      user1: message.room.user1,
+      user2: message.room.user2,
+    };
   }
 
   update(id: number, updateMessageDto: UpdateMessageDto) {

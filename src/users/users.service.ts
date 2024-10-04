@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Req } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { Room } from 'src/rooms/entities/room.entity';
 import { Message } from 'src/messages/entities/message.entity';
 import { GoogleUserDto } from './dto/google-user.dto';
@@ -32,8 +32,9 @@ export class UsersService {
     return await this.userRepository.save(user);
   }
 
-  async findAll() {
-    return await this.userRepository.find();
+  async findAll(@Req() req) {
+    const user = req.user.id;
+    return await this.userRepository.find({where:{id: Not(user)}});
   }
 
   async findOne(id: number) {

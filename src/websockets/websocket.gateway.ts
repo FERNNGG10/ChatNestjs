@@ -15,7 +15,7 @@ import { MessagesService } from 'src/messages/messages.service';
 
 @WebSocketGateway(3002, {
   cors: {
-    origin: '*',
+    origin:'*',
     methods: ['GET', 'POST'],
   },
 })
@@ -70,13 +70,17 @@ export class webSocketGateway
     }
     // console.log(message.message)
     // console.log(message.roomId) 
-    await this.messageService.create(message,client.data.user.id);
+    const newmessage=await this.messageService.create(message,client.data.user.id);
+    //console.log(await this.messageService.findbymessage(newmessage.id))
+    const mappedmessage = await this.messageService.findbymessage(newmessage.id);
     //console.log(this.clients.get(message.roomId))
+    //console.log(newmessage)
     const recipientClient = this.clients.get(message.roomId);
     // console.log(recipientClient)
     // console.log('sending message to recipient', this.clients.get(message.roomId));
     if (recipientClient) {
-      recipientClient.emit('newMessage',message);
+      console.log('sending message to recipient', mappedmessage);
+      recipientClient.emit('newMessage',mappedmessage);
     }
   }
 }
