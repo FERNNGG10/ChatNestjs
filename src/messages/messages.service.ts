@@ -55,6 +55,7 @@ export class MessagesService {
           userId2: id,
         },
       },
+      
     });
 
     // Filtrar manualmente los resultados para excluir el objeto `room`
