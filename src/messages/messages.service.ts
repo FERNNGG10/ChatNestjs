@@ -53,6 +53,9 @@ export class MessagesService {
               { room: { userId1: userId, userId2: id } },
               { room: { userId1: id, userId2: userId } }
           ],
+          order:{
+            createdAt: 'ASC'
+          }
       });
       return messages.map(message => {
           return {
