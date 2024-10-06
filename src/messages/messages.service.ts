@@ -71,6 +71,34 @@ export class MessagesService {
       });
   }
 
+  async LastMessage(id: number, userId: number) {
+    const message = await this.messageRepository.findOne({
+        relations: ['room', 'room.user1', 'room.user2'],
+        where: [
+            { room: { userId1: userId, userId2: id } },
+            { room: { userId1: id, userId2: userId } }
+        ],
+        order: {
+          createdAt: 'DESC'
+        }
+    });
+
+    if (!message) {
+      throw new Error('Message not found');
+    }
+
+    return {
+        id: message.id,
+        message: decryptMessage(message.message),
+        roomId: message.roomId,
+        createdAt: message.createdAt,
+        updatedAt: message.updatedAt,
+        deletedAt: message.deletedAt,
+        user1: message.room.user1,
+        user2: message.room.user2
+    };
+  }
+
   async findbymessage(id: number) {
     const message = await this.messageRepository.findOne({
       relations: ['room', 'room.user1', 'room.user2'],

@@ -25,6 +25,13 @@ export class MessagesController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('last/:id')
+  LastMessages(@Param('id') id: string,@Req() req) {
+    const userId = req.user.id
+    return this.messagesService.LastMessage(+id,userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string,@Req() req) {
     const userId = req.user.id
