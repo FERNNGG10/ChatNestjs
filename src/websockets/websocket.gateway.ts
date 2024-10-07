@@ -82,6 +82,7 @@ export class webSocketGateway
       console.log('sending message to recipient', mappedmessage);
       recipientClient.emit('newMessage',mappedmessage);
     }
+    console.log('sending message to sender', mappedmessage);
     client.emit('newMessage',mappedmessage);
   }
 }

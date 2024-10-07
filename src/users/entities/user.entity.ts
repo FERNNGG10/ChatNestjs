@@ -55,7 +55,6 @@ export class User {
   }
 
   @BeforeInsert()
-  //@BeforeUpdate()
   async encryptPassword() {
     const hash = createHash('sha256');
     hash.update(this.password);

@@ -60,8 +60,8 @@ export class MessagesService {
       return messages.map(message => {
           return {
               id: message.id,
-              message: decryptMessage(message.message),
-              //message: message.message, en caso de que se pida que desencrpte en cliente
+              // message: decryptMessage(message.message),
+              message: message.message,
               roomId: message.roomId,
               createdAt: message.createdAt,
               updatedAt: message.updatedAt,
@@ -113,8 +113,8 @@ export class MessagesService {
   
     return {
       id: message.id,
-      message: decryptMessage(message.message),
-      //message: message.message,en caso de que se pida que desencrpte en cliente
+      // message: decryptMessage(message.message),
+      message: message.message,
       roomId: message.roomId,
       createdAt: message.createdAt,
       updatedAt: message.updatedAt,
