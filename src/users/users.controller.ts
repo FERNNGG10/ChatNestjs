@@ -11,6 +11,10 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get('holamundo')
+  holamundo(){
+    return this.usersService.holamundo()
+  }
  
   @Get('seeder')
   seeder(){

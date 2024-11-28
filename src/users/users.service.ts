@@ -22,6 +22,11 @@ export class UsersService {
     private readonly messageRepository: Repository<Message>
   ){}
 
+  async holamundo() {
+    return 'Hola mundo';
+  }
+
+
   async create(createUserDto: CreateUserDto) {
     const user = await this.userRepository.create(createUserDto);
     return await this.userRepository.save(user);
