@@ -16,13 +16,13 @@ export class Message {
     @ManyToOne(()=>Room,(room)=>room.messages )
     room:Room
 
-    @CreateDateColumn({type:'date'})
+    @CreateDateColumn({type:'timestamp'})
     createdAt: Date;
 
-    @UpdateDateColumn({type:'date'})
+    @UpdateDateColumn({type:'timestamp'})
     updatedAt: Date;
 
-    @DeleteDateColumn({type:'date'})
+    @DeleteDateColumn({type:'timestamp'})
     deletedAt: Date;
     
 }

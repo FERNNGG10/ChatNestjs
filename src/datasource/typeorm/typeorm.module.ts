@@ -15,7 +15,7 @@ import { Room } from 'src/rooms/entities/room.entity';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        type: 'postgres',
+        type: 'mysql',
         host: configService.get('DB_HOST'),
         port: configService.get('DB_PORT'),
         username: configService.get('DB_USERNAME'),

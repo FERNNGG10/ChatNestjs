@@ -33,13 +33,13 @@ export class User {
   @Column({ nullable: true })
   code: string;
 
-  @CreateDateColumn({ type: 'date' })
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @DeleteDateColumn({ type: 'date' })
+  @DeleteDateColumn({ type: 'timestamp' })
   deletedAt: Date;
 
-  @UpdateDateColumn({ type: 'date' })
+  @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
   @OneToMany(() => Room, room => room.user1)
